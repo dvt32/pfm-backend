@@ -1,0 +1,31 @@
+Configuration:
+  status: warn
+  name: PersonalFinanceApplication
+
+  properties:
+    property:
+      - name: FINANCE_LOG_PATTERN
+        value: "%d{DEFAULT} %clr{%-5p [%c]} (%t) [u=%X{effective_user}, rqid=%X{request_id}] %m%ex%n"
+      - name: DEFAULT_LOG_PATTERN
+        value: "%d{DEFAULT} %clr{%-5p [%c]} (%t) %m%ex%n"
+
+  appenders:
+    Console:
+      - name: FinanceConsoleAppender
+        PatternLayout:
+          Pattern: ${FINANCE_LOG_PATTERN}
+      - name: DefaultConsoleAppender
+        PatternLayout:
+          Pattern: ${DEFAULT_LOG_PATTERN}
+
+  Loggers:
+    logger:
+      - name: com.mse.personal.finance
+        level: debug
+        additivity: false
+        AppenderRef:
+          - ref: FinanceConsoleAppender
+    Root:
+      level: info
+      AppenderRef:
+        - ref: DefaultConsoleAppender

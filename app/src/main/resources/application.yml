@@ -1,0 +1,35 @@
+# Default configurations
+# Override with your own by providing custom application.yml to the --spring.config.additional-location argument
+# To completely ignore this file, use the --spring.config.location argument
+
+server:
+  port: 8800
+  error:
+    # Exclude the trace in the HTTP response's body (alternative to removing DevTools dependency)
+    include-stacktrace: on-trace-param
+
+logging:
+  config: classpath:log4j2.yml
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/msedb
+    username: postgres
+    password: root
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQL95Dialect
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: false
+    # Explicitly define it as false, being true is an anti pattern
+    open-in-view: false
+
+  liquibase:
+      change-log: classpath:/com/mse/personal/finance/db/changelog/changelog-master.xml
+
+security:
+  jwt:
+    issuer: mse
+    # Session expiration time in seconds
+    expiration: 1800
